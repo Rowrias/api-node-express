@@ -20,4 +20,7 @@ Projeto utilizado no curso da Alura
     - adicionar .env no gitignore para esconder as senhas
     - agora pode subir o projeto base para o github
 
-06. 
+06. Baixar Linter que indentifica erros mais cedo
+    - npm init @eslint/config
+    - instalar a extensão eslint no vscode.
+    - npx eslint . --fix
