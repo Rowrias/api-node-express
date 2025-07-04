@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import livros from "../models/Livro.js";
 
 class LivroController {
@@ -15,6 +16,7 @@ class LivroController {
   };
 
   static listarLivroPorId = async (req, res) => {
+
     try {
       const id = req.params.id;
 
@@ -22,9 +24,17 @@ class LivroController {
         .populate("autor", "nome")
         .exec();
 
-      res.status(200).send(livroResultados);
+      if(livroResultados !== null) {
+        res.status(200).send(livroResultados)
+      } else {
+        res.status(400).send({message: "Id do Livro não localizado."})
+      }
     } catch (erro) {
-      res.status(400).send({message: `${erro.message} - Id do livro não localizado.`});
+      if (erro instanceof mongoose.Error.CastError) {
+        res.status(400).send({message: "Um ou mais dados fornecidos estão incorretos."});
+      } else {
+        res.status(500).send({message: "Erro interno de servidor."});
+      }
     }
   };
 
